@@ -2,7 +2,7 @@
 Creates a copy element from existing element using data-copy attribute. Places a copy icon next to the element. When clicking the icon, the value of the element is copied and a copied overlay is displayed over the element for a short duration.\
 ![Without Component Image](/screenshots/Component_1.png?raw=true "Without Component")\
 ![With Component Image](/screenshots/Component_2.png?raw=true "With Component")\
-![After Copy Image](/screenshots/Component_3.png?raw=true "After Copy")\
+![After Copy Image](/screenshots/Component_3.png?raw=true "After Copy")
 
 ## Usage instructions
 * Copy the component JS, CSS, and Icons to your project
