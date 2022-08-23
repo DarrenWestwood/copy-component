@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Blockonomics Copy Component</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/default.min.css">
+
+    <link rel="stylesheet" href="css/fonts.css">
+    <link rel="stylesheet" href="css/bnomics-input.css">
+
+    <style>
+        body {
+            background-color: #111f2c;
+            color: #fff;
+        }
+
+        .row {
+            margin-top: 20px;
+        }
+
+        .preview-container > .row {
+            padding-top: 20px;
+            padding-bottom: 20px;
+        }
+
+        .preview-container .preview-row {
+            padding-left: 0;
+            padding-right: 0;
+            margin: 0;
+        }
+
+        .preview-container .preview-{
+            padding-top: 15px;
+            padding-left: 0;
+            padding-right: 0;
+        }
+        
+        .preview-container .preview-col:not(:last-child) {
+            border-bottom: 1px dashed #40c381;
+            padding-bottom: 15px;
+        }
+        .preview-container .preview-col:not(:first-child) {
+            padding-top: 15px;
+        }
+
+        .mt-0 {
+            margin-top: 0;
+        }
+
+        .code {
+            background-color: #26313A; 
+            border-radius: 5px;
+            color: #fff;
+            padding: 5px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container preview-container">
+        <div class="row">
+            <div class="col-xs-12 text-center">
+                <h1 class="text-center">
+                    Blockonomics Copy Component 
+                </h1>
+                <hr />
+            </div>
+        </div>
+        
+        <div class="row mt-0">
+            <div class="col-xs-12 text-center">
+                <h2 class="text-center mt-0">
+                    Usage
+                </h2>
+            </div>
+            <div class="col-xs-12 text-left">
+                <strong>Include CSS in Header</strong>
+                <pre class="code"><code class="language-html">&lt;link rel=&quot;stylesheet&quot; href=&quot;bnomics-input.css&quot;&gt;</code></pre>
+                
+                <strong>Create the Input Container</strong>
+                <pre class="code"><code class="language-html">&lt;div class=&quot;bnomics-input&quot; data-style=&quot;light|dark|dark-alt&quot; data-icon-style=&quot;(Optional) light|dark&quot; data-copy=&quot;(Optional) Data to Copy instead of the content inside&quot;&gt;
+    Content to Copy. Can be a HTML Content or Simple text
+&lt;/div&gt;</code></pre>
+                
+                <strong>Include Required JS and Initialise the Container</strong>
+                <pre class="code"><code class="language-html">&lt;script src=&quot;bnomics-input.js&quot; type=&quot;text/javascript&quot; /&gt;</code></pre>
+                <pre class="code"><code class="language-html">&lt;script&gt;
+    new BlocknomicsInput(document.querySelector(&quot;.bnomics-input&quot;))
+&lt;/script&gt;</code></pre>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xs-12 text-center">
+                <h2 class="text-center mt-0">
+                    Demo/Examples
+                </h2>
+            </div>
+        </div>
+
+        <div class="row" style="background-color: #000; color: #fff;">
+            <div class="col-xs-12 col-md-2 font-weight-bold">
+                Type/Style
+            </div>
+            <div class="col-xs-12 col-md-10 font-weight-bold">
+                Preview
+            </div>
+        </div>
+
+        <div class="row" style="background-color: #111f2c; color: #fff;">
+            <div class="col-xs-12 col-md-2">
+                Div/Dark <br/>
+                With <code>data-copy</code>
+            </div>
+            <div class="col-xs-12 col-md-10">
+                <div class="row preview-row">
+                    <div class="col-xs-12 preview-col">
+                        <div class="bnomics-input" data-style="dark" data-copy="&lt;div class=&quot;bnomics-input&quot; data-style=&quot;dark&quot; data-copy=&quot;...&quot;&gt;Content to Copy&lt;/div&gt;">
+                            &lt;div class=&quot;bnomics-input&quot; data-style=&quot;dark&quot; data-copy=&quot;...&quot;&gt;Content to Copy&lt;/div&gt; 
+                        </div>
+                    </div>
+                    <div class="col-xs-12 preview-col">
+                        <div class="bnomics-input" data-style="dark" data-copy="1FfmbHfnpaZjKFvyi1okTjJJusN455paPH">
+                            1FfmbHfnpaZjKFvyi1okTjJJusN455paPH
+                        </div>
+                    </div>
+                    <div class="col-xs-12 preview-col">
+                        <div class="bnomics-input" data-style="dark" data-copy="0.00018406">
+                            0.00018406
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row" style="background-color: #213140; color: #fff;">
+            <div class="col-xs-12 col-md-2">
+                Div/Dark Alt <br/>
+                With <code>data-copy</code>
+            </div>
+            <div class="col-xs-12 col-md-10">
+                <div class="row preview-row">
+                    <div class="col-xs-12 preview-col">
+                        <div class="bnomics-input" data-style="dark-alt" data-copy="&lt;div class=&quot;bnomics-input&quot; data-style=&quot;dark-alt&quot; data-copy=&quot;...&quot;&gt;Content to Copy&lt;/div&gt;">
+                            &lt;div class=&quot;bnomics-input&quot; data-style=&quot;dark-alt&quot; data-copy=&quot;...&quot;&gt;Content to Copy&lt;/div&gt; 
+                        </div>
+                    </div>
+                    <div class="col-xs-12 preview-col">
+                        <div class="bnomics-input" data-style="dark-alt" data-copy="1FfmbHfnpaZjKFvyi1okTjJJusN455paPH">
+                            1FfmbHfnpaZjKFvyi1okTjJJusN455paPH
+                        </div>
+                    </div>
+                    <div class="col-xs-12 preview-col">
+                        <div class="bnomics-input" data-style="dark-alt" data-copy="0.00018406">
+                            0.00018406
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row" style="background-color: #fff; color: #000;">
+            <div class="col-xs-12 col-md-2">
+                Div/Light <br/>
+                With <code>data-copy</code>
+            </div>
+            <div class="col-xs-12 col-md-10">
+                <div class="row preview-row">
+                    <div class="col-xs-12 preview-col">
+                        <div class="bnomics-input" data-style="light" data-copy="&lt;div class=&quot;bnomics-input&quot; data-style=&quot;light&quot; data-copy=&quot;...&quot;&gt;Content to Copy&lt;/div&gt;">
+                            &lt;div class=&quot;bnomics-input&quot; data-style=&quot;light&quot; data-copy=&quot;...&quot;&gt;Content to Copy&lt;/div&gt; 
+                        </div>
+                    </div>
+                    <div class="col-xs-12 preview-col">
+                        <div class="bnomics-input" data-style="light" data-copy="1FfmbHfnpaZjKFvyi1okTjJJusN455paPH">
+                            1FfmbHfnpaZjKFvyi1okTjJJusN455paPH
+                        </div>
+                    </div>
+                    <div class="col-xs-12 preview-col">
+                        <div class="bnomics-input" data-style="light" data-copy="0.00018406">
+                            0.00018406
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row" style="background-color: #111f2c; color: #fff;">
+            <div class="col-xs-12 col-md-2">
+                Div/Dark (Auto) <br/>
+                Without providing <code>data-copy</code>
+            </div>
+            <div class="col-xs-12 col-md-10">
+                <div class="row preview-row">
+                    <div class="col-xs-12 preview-col">
+                        <div class="bnomics-input" data-style="dark">
+                            &lt;div class=&quot;bnomics-input&quot; data-style=&quot;dark&quot;&gt;Content to Copy&lt;/div&gt; 
+                        </div>
+                    </div>
+                    <div class="col-xs-12 preview-col">
+                        <div class="bnomics-input" data-style="dark">
+                            1FfmbHfnpaZjKFvyi1okTjJJusN455paPH
+                        </div>
+                    </div>
+                    <div class="col-xs-12 preview-col">
+                        <div class="bnomics-input" data-style="dark">
+                            0.00018406
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row" style="background-color: #213140; color: #fff;">
+            <div class="col-xs-12 col-md-2">
+                Div/Dark Alt (Auto) <br/>
+                Without providing <code>data-copy</code>
+            </div>
+            <div class="col-xs-12 col-md-10">
+                <div class="row preview-row">
+                    <div class="col-xs-12 preview-col">
+                        <div class="bnomics-input" data-style="dark-alt">
+                            &lt;div class=&quot;bnomics-input&quot; data-style=&quot;dark-alt&quot;&gt;Content to Copy&lt;/div&gt; 
+                        </div>
+                    </div>
+                    <div class="col-xs-12 preview-col">
+                        <div class="bnomics-input" data-style="dark-alt">
+                            1FfmbHfnpaZjKFvyi1okTjJJusN455paPH
+                        </div>
+                    </div>
+                    <div class="col-xs-12 preview-col">
+                        <div class="bnomics-input" data-style="dark-alt">
+                            0.00018406
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row" style="background-color: #fff; color: #000;">
+            <div class="col-xs-12 col-md-2">
+                Div/Light (Auto) <br/>
+                Without providing <code>data-copy</code>
+            </div>
+            <div class="col-xs-12 col-md-10">
+                <div class="row preview-row">
+                    <div class="col-xs-12 preview-col">
+                        <div class="bnomics-input" data-style="light">
+                            &lt;div class=&quot;bnomics-input&quot; data-style=&quot;light&quot;&gt;Content to Copy&lt;/div&gt; 
+                        </div>
+                    </div>
+                    <div class="col-xs-12 preview-col">
+                        <div class="bnomics-input" data-style="light">
+                            1FfmbHfnpaZjKFvyi1okTjJJusN455paPH
+                        </div>
+                    </div>
+                    <div class="col-xs-12 preview-col">
+                        <div class="bnomics-input" data-style="light">
+                            0.00018406
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row" style="background-color: #fff; color: #000;">
+            <div class="col-xs-12 col-md-2">
+                Div/Dark (Auto) <br/>
+                Without providing <code>data-copy</code><br/>
+                With <code>data-icon-style</code>
+            </div>
+            <div class="col-xs-12 col-md-10">
+                <div class="row preview-row">
+                    <div class="col-xs-12 preview-col">
+                        <div class="bnomics-input" data-style="dark" data-icon-style="light">
+                            &lt;div class=&quot;bnomics-input&quot; data-style=&quot;dark&quot; data-icon-style=&quot;light&quot;&gt;Content to Copy&lt;/div&gt; 
+                        </div>
+                    </div>
+                    <div class="col-xs-12 preview-col">
+                        <div class="bnomics-input" data-style="dark" data-icon-style="light">
+                            1FfmbHfnpaZjKFvyi1okTjJJusN455paPH
+                        </div>
+                    </div>
+                    <div class="col-xs-12 preview-col">
+                        <div class="bnomics-input" data-style="dark" data-icon-style="light">
+                            0.00018406
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</body>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+
+<script src="js/bnomics-input.js"></script>
+<script>
+    hljs.highlightAll();
+    document.querySelectorAll('.bnomics-input').forEach((e) => new BlocknomicsInput(e))
+</script>
+</html>
