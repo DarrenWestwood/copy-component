@@ -6,7 +6,9 @@
     display: flex;
 }
 
-.bnomics-input--content {
+
+.bnomics-input--content,
+textarea.bnomics-input  {
     position: relative;
     display: flex;
     width: calc(100% - 30px);
@@ -17,17 +19,31 @@
     font-family: 'IBM Plex Mono', sans-serif;
 }
 
-.bnomics-input.dark .bnomics-input--content {
+textarea.bnomics-input.has-copy {
+    margin-right: 30px;
+    width: 100%;
+    resize: none;
+    height: auto;
+    overflow: hidden;
+    width: calc(100% - 30px);
+    outline: none;
+    border-width: 0;
+}
+
+.bnomics-input.dark .bnomics-input--content,
+textarea.bnomics-input.dark {
     background-color: #26313B;
     color: #fff;
 }
 
-.bnomics-input.dark-alt .bnomics-input--content {
+.bnomics-input.dark-alt .bnomics-input--content,
+textarea.bnomics-input.dark-alt {
     background-color: #111f2c;
     color: #40c381;
 }
 
-.bnomics-input.light .bnomics-input--content {
+.bnomics-input.light .bnomics-input--content,
+textarea.bnomics-input.light {
     background-color: #f2f5f8;
     color: #000;
 }
@@ -51,7 +67,7 @@
     align-items: center;
     justify-content: center;
     background-color: #26313B;
-    transition: 0.3s all;
+    transition: 0.3s opacity;
     border-radius: 10px;
     color: #fff;
     opacity: 0;
@@ -82,6 +98,12 @@
     width: 20px;
     height: 20px;
     margin-left: 6px;
+    z-index: -1;
+    transition: none;
+}
+
+.bnomics-input--overlay.visible img {
+    z-index: 1;
 }
 
 .bnomics-input--copy {
@@ -96,6 +118,13 @@
     padding: 5px;
     cursor: pointer;
     transition: 0.3s transform;
+    box-sizing: border-box;
+}
+
+.bnomics-input--copy.floating {
+    position: absolute;
+    height: 30px;
+    width: 30px;
 }
 
 .bnomics-input--copy:hover {
