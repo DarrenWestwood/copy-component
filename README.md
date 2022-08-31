@@ -10,4 +10,4 @@ Creates a copy element from existing element using data-copy attribute. Places a
 * Add the element
 `<div class="bnomics-input" data-style="dark">Content</div>`
 
-For more usage examples visit: 
+For more usage examples/demo visit: https://thisisayush.github.io/copy-component/
