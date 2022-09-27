@@ -52,8 +52,8 @@ function copyToClipboard(evt) {
 
 
 //
-// Additional JS for attachment to input fields
-// Looks for elements with th data-copy attribute and wraps in the correct structure
+// Additional JS for attachment to input, textarea, span, div elements
+// Looks for elements with the data-copy attribute and wraps in the correct structure
 // This:
 // <input value="MyValue" data-copy>
 // Gets transformed to:
