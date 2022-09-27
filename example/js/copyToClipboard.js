@@ -24,10 +24,10 @@ var showCopiedText = function(copy_element) {
   copy_input.style.height = copy_input.getBoundingClientRect().height+'px';
   copy_input.style.width = copy_input.getBoundingClientRect().width+'px';
   var copied_text = copy_element.querySelector(".copied-text");
-  copied_text.style.height = copy_input.querySelector("input") ? copy_input.querySelector("input").getBoundingClientRect().height+'px' : copy_input.querySelector(".value").offsetHeight+'px';
-  copied_text.style.lineHeight = copy_input.querySelector("input") ? copy_input.querySelector("input").getBoundingClientRect().height+'px' : copy_input.querySelector(".value").offsetHeight+'px';
+  copied_text.style.height = copy_input.querySelector("input") ? copy_input.querySelector("input").getBoundingClientRect().height+'px' : copy_input.querySelector('[data-copy]').offsetHeight+'px';
+  copied_text.style.lineHeight = copy_input.querySelector("input") ? copy_input.querySelector("input").getBoundingClientRect().height+'px' : copy_input.querySelector('[data-copy]').offsetHeight+'px';
   // Show copied overlay
-  var copy_value = copy_input.querySelector("input") ? copy_input.querySelector("input") : copy_input.querySelector(".value");
+  var copy_value = copy_input.querySelector("input") ? copy_input.querySelector("input") : copy_input.querySelector('[data-copy]');
   copied_text.querySelector("img").style.height =  '17px';
   copied_text.style.display = "inline-block";
   copy_value.style.display = "none";
@@ -43,7 +43,7 @@ var showCopiedText = function(copy_element) {
 function copyToClipboard(evt) {
   var copy_element = evt.currentTarget.parentElement;
   var copy_input = copy_element.querySelector(".output-copy");
-  var copy_value = copy_element.querySelector('input') ? copy_input.querySelector("input").value : copy_input.querySelector(".value").innerHTML;
+  var copy_value = copy_element.querySelector('input') ? copy_input.querySelector("input").value : copy_input.querySelector('[data-copy]').innerHTML;
   var copy_html = decodeHtml(copy_value);
   navigator.clipboard.writeText(copy_html).then(() => {
       showCopiedText(copy_element);
@@ -80,9 +80,6 @@ for (var i = el1.length - 1; i >= 0; i--) {
   // Create the 1st div to wrap the element in
   const containerInner = document.createElement('div');
   containerInner.classList.add("output-copy");
-  // Apply the original width to the wrap
-  containerInner.style.width = boxStyles.width;
-  el1[i].style.border = boxStyles.border;
   // Wrap the element in the 1st div
   wrap(el1[i], containerInner);
 
@@ -99,16 +96,9 @@ for (var i = el1.length - 1; i >= 0; i--) {
   copied.style.color = boxStyles.color;
   copied.classList.add("copied-text");
   // confirm-circle icon color
-  const icon_color = el1[i].getAttribute('data-icons');
-  if (icon_color) {
-    const src = "img/blockonomics_icons/confirm-circle-"+icon_color+".png";
-    copied.innerHTML = "Copied <img class=\"blockonomics-icon\" src=\""+src+"\">";
-    containerInner.appendChild(copied);
-  }else {
-    const src = "img/blockonomics_icons/confirm-circle.png";
-    copied.innerHTML = "Copied <img class=\"blockonomics-icon\" src=\""+src+"\">";
-    containerInner.appendChild(copied);
-  }
+  const confirm_src = el1[i].getAttribute('light-icons') === null ?  "img/blockonomics_icons/confirm-circle-dark.png" :  "img/blockonomics_icons/confirm-circle.png";
+  copied.innerHTML = "Copied <img class=\"blockonomics-icon\" src=\""+confirm_src+"\">";
+  containerInner.appendChild(copied);
 
   // Create the 2nd div to wrap the element in
   const containerOuter = document.createElement('div');
@@ -121,28 +111,15 @@ for (var i = el1.length - 1; i >= 0; i--) {
   image.classList.add("blockonomics-icon");
 
   // copy icon color
-  const copy_icon_color= el1[i].getAttribute('data-icons');
-  if (copy_icon_color) {
-    const src = "img/blockonomics_icons/copy-"+copy_icon_color+".png";
-    image.setAttribute(
-      'src',
-      src,
-    );
-    image.setAttribute(
-      'onclick',
-      'copyToClipboard(event)',
-    );
-    containerOuter.appendChild(image);
-  }else {
-    const src = "img/blockonomics_icons/copy.png";
-    image.setAttribute(
-      'src',
-      src,
-    );
-    image.setAttribute(
-      'onclick',
-      'copyToClipboard(event)',
-    );
-    containerOuter.appendChild(image);
-  }
+  const copy_src = el1[i].getAttribute('light-icons') === null ? "img/blockonomics_icons/copy-dark.png" : "img/blockonomics_icons/copy.png";
+  image.setAttribute(
+    'src',
+    copy_src,
+  );
+  image.setAttribute(
+    'onclick',
+    'copyToClipboard(event)',
+  );
+  containerOuter.appendChild(image);
+
 }
