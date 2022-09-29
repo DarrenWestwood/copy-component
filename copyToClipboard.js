@@ -88,6 +88,10 @@ class CopyToClipboard {
     // Process all elements with the data-copy attribute
     const el1 = document.querySelectorAll("[data-copy]");
     for (var i = el1.length - 1; i >= 0; i--) {
+      // Check if already processed
+      if(el1[i].classList.contains("copied-value")){
+        return
+      }
       el1[i].classList.add("copied-value");
       // Check the color to use for icons
       const iconColor =
