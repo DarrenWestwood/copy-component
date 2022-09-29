@@ -7,7 +7,7 @@ function copyToClipboard(evt) {
   var copy_input = copy_element.querySelector(".output-copy");
   var copy_value = copy_element.querySelector("input")
     ? copy_input.querySelector("input").value
-    : copy_input.querySelector("[data-copy]").innerHTML;
+    : copy_input.querySelector(".copied-value").innerHTML;
   // Allow copying of code snippets such as js script tags
   var copy_html = decodeHtml(copy_value);
   navigator.clipboard.writeText(copy_html).then(() => {
@@ -19,7 +19,7 @@ var processOverlay = function (copy_element) {
   var copy_input = copy_element.querySelector(".output-copy");
   var copy_value = copy_input.querySelector("input")
     ? copy_input.querySelector("input")
-    : copy_input.querySelector("[data-copy]");
+    : copy_input.querySelector(".copied-value");
   var copied_overlay = createCopiedOverlay(copy_value, copy_element);
   // Show copied overlay
   showOverlay(copied_overlay, copy_value);
@@ -32,7 +32,7 @@ var processOverlay = function (copy_element) {
 function createCopiedOverlay(copy_value, copy_element) {
   // Fetch existing css styles of the element
   const boxStyles = window.getComputedStyle(copy_value);
-  var copied_overlay = copy_element.querySelector(".copied-text");
+  var copied_overlay = copy_element.querySelector(".copied-overlay");
   // Assign existing css styles to overlay
   copied_overlay.style.cssText = addExistingStyles(boxStyles);
   // Apply blockonomics css to the overlay
@@ -84,38 +84,45 @@ JS for attachment to input, textarea, span, div elements
 Looks for elements with the data-copy attribute and wraps in the correct copy structure
 */
 
-// Process all elements with the data-copy attribute
-const el1 = document.querySelectorAll("[data-copy]");
-for (var i = el1.length - 1; i >= 0; i--) {
-  // Check the color to use for icons
-  const iconColor =
-    el1[i].getAttribute("light-icons") === null ? "dark" : "light";
+window.processElements = function() {
+  // Process all elements with the data-copy attribute
+  const el1 = document.querySelectorAll("[data-copy]");
+  for (var i = el1.length - 1; i >= 0; i--) {
+    el1[i].classList.add("copied-value");
+    // Check the color to use for icons
+    const iconColor =
+      el1[i].getAttribute("light-icons") === null ? "dark" : "light";
 
-  // Wrap the element in the 1st div
-  const containerInner = document.createElement("div");
-  containerInner.classList.add("output-copy");
-  wrapElement(el1[i], containerInner);
+    // Wrap the element in the 1st div
+    const containerInner = document.createElement("div");
+    containerInner.classList.add("output-copy");
+    wrapElement(el1[i], containerInner);
 
-  // Create the Copied overlay
-  const copied = document.createElement("span");
-  copied.classList.add("copied-text");
-  copied.innerHTML =
-    'Copied <img class="blockonomics-icon" src="' +
-    getCheckImage(iconColor) +
-    '">';
-  containerInner.appendChild(copied);
+    // Create the Copied overlay
+    const copied = document.createElement("span");
+    copied.classList.add("copied-overlay");
+    copied.innerHTML =
+      'Copied <img class="blockonomics-icon" src="' +
+      getCheckImage(iconColor) +
+      '">';
+    containerInner.appendChild(copied);
 
-  // Wrap the element in the 2nd div
-  const containerOuter = document.createElement("div");
-  containerOuter.classList.add("output-copy-container");
-  wrapElement(containerInner, containerOuter);
+    // Wrap the element in the 2nd div
+    const containerOuter = document.createElement("div");
+    containerOuter.classList.add("output-copy-container");
+    wrapElement(containerInner, containerOuter);
 
-  // Create the copy icon
-  const image = document.createElement("img");
-  image.classList.add("blockonomics-icon");
-  image.setAttribute("src", getCopyImage(iconColor));
-  image.setAttribute("onclick", "copyToClipboard(event)");
-  containerOuter.appendChild(image);
+    // Create the copy icon
+    const image = document.createElement("img");
+    image.classList.add("blockonomics-icon");
+    image.setAttribute("src", getCopyImage(iconColor));
+    image.setAttribute("onclick", "copyToClipboard(event)");
+    containerOuter.appendChild(image);
+  }
+}
+
+window.onload = function() {
+  window.processElements()
 }
 
 function getCopyImage(iconColor) {
@@ -156,7 +163,7 @@ var styles = `
 .output-copy-container .value {
   display: inline-block;
 }
-.output-copy-container .copied-text {
+.output-copy-container .copied-overlay {
   width: 100%;
   text-align: center;
   display: none;
