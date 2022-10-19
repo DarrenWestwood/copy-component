@@ -84,44 +84,48 @@ class CopyToClipboard {
   JS for attachment to input, textarea, span, div elements
   Looks for elements with the data-copy attribute and wraps in the correct copy structure
   */
+  processElement = function(elem) {
+    // Check if already processed
+    if(elem.classList.contains("copied-value")){
+      return
+    }
+    elem.classList.add("copied-value");
+    // Check the color to use for icons
+    const iconColor =
+      elem.getAttribute("light-icons") === null ? "dark" : "light";
+
+    // Wrap the element in the 1st div
+    const containerInner = document.createElement("div");
+    containerInner.classList.add("output-copy");
+    this.wrapElement(elem, containerInner);
+
+    // Create the Copied overlay
+    const copied = document.createElement("span");
+    copied.classList.add("copied-overlay");
+    copied.innerHTML =
+      'Copied <img class="blockonomics-icon" src="' +
+      this.getCheckImage(iconColor) +
+      '">';
+    containerInner.appendChild(copied);
+
+    // Wrap the element in the 2nd div
+    const containerOuter = document.createElement("div");
+    containerOuter.classList.add("output-copy-container");
+    this.wrapElement(containerInner, containerOuter);
+
+    // Create the copy icon
+    const image = document.createElement("img");
+    image.classList.add("blockonomics-icon");
+    image.setAttribute("src", this.getCopyImage(iconColor));
+    image.addEventListener('click', (evt) => this.copyToClipboard(evt))
+    containerOuter.appendChild(image);
+  }
+
   processElements = function() {
     // Process all elements with the data-copy attribute
-    const el1 = document.querySelectorAll("[data-copy]");
-    for (var i = el1.length - 1; i >= 0; i--) {
-      // Check if already processed
-      if(el1[i].classList.contains("copied-value")){
-        return
-      }
-      el1[i].classList.add("copied-value");
-      // Check the color to use for icons
-      const iconColor =
-        el1[i].getAttribute("light-icons") === null ? "dark" : "light";
-
-      // Wrap the element in the 1st div
-      const containerInner = document.createElement("div");
-      containerInner.classList.add("output-copy");
-      this.wrapElement(el1[i], containerInner);
-
-      // Create the Copied overlay
-      const copied = document.createElement("span");
-      copied.classList.add("copied-overlay");
-      copied.innerHTML =
-        'Copied <img class="blockonomics-icon" src="' +
-        this.getCheckImage(iconColor) +
-        '">';
-      containerInner.appendChild(copied);
-
-      // Wrap the element in the 2nd div
-      const containerOuter = document.createElement("div");
-      containerOuter.classList.add("output-copy-container");
-      this.wrapElement(containerInner, containerOuter);
-
-      // Create the copy icon
-      const image = document.createElement("img");
-      image.classList.add("blockonomics-icon");
-      image.setAttribute("src", this.getCopyImage(iconColor));
-      image.addEventListener('click', (evt) => this.copyToClipboard(evt))
-      containerOuter.appendChild(image);
+    const elems = document.querySelectorAll("[data-copy]");
+    for (var i = elems.length - 1; i >= 0; i--) {
+      this.processElement(elems[i])
     }
   }
 
@@ -193,8 +197,21 @@ class CopyToClipboard {
 
 }
 
-window.onload = function() {
-  const copyToClipboard = new CopyToClipboard()
-  copyToClipboard.loadRequiredStyles()
-  copyToClipboard.processElements()
-}
+const copyToClipboard = new CopyToClipboard()
+copyToClipboard.loadRequiredStyles()
+copyToClipboard.processElements()
+
+// Fix for angularjs and other dynamically loaded pages/popups etc.
+// Watches for any DOM changes which include the data-copy attribute
+const observer = new MutationObserver((mutations, observer) => {
+  mutations.forEach(element => {
+    var found_elem = element.target.querySelector('[data-copy]')
+    if(found_elem){
+      copyToClipboard.processElement(found_elem)
+    }
+  })
+});
+observer.observe(document, {
+  subtree: true,
+  attributes: true
+});
