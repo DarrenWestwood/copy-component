@@ -87,7 +87,7 @@ class CopyToClipboard {
   processElement = function(elem) {
     // Check if already processed
     // Checks if value exists to avoid processing elements before ng-value has set the value
-    if(elem.classList.contains("copied-value")|| !elem.value){
+    if(elem.classList.contains("copied-value")|| (!elem.value && !elem.innerHTML)){
       return
     }
     elem.classList.add("copied-value");
