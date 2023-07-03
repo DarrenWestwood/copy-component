@@ -21,6 +21,10 @@ class CopyToClipboard {
     var copy_value = copy_input.querySelector("input")
       ? copy_input.querySelector("input")
       : copy_input.querySelector(".copied-value");
+    // Check if the overlay is already displayed
+    if(copy_value.style.display == 'none'){
+      return
+    }
     var copied_overlay = this.createCopiedOverlay(copy_value, copy_element);
     // Show copied overlay
     this.showOverlay(copied_overlay, copy_value);
@@ -98,54 +102,27 @@ class CopyToClipboard {
     // Wrap the element in the 1st div
     const containerInner = document.createElement("div");
     containerInner.classList.add("output-copy");
-    containerInner.style.maxWidth = "-webkit-calc(100% - 30px) !important";
-    containerInner.style.maxWidth = "-moz-calc(100% - 30px) !important";
-    containerInner.style.maxWidth = "calc(100% - 30px) !important";
-    containerInner.style.wordBreak = "break-all";
     this.wrapElement(elem, containerInner);
 
-    // Create the tick icon
-    const tickImage = document.createElement("img");
-    tickImage.classList.add("blockonomics-icon");
-    tickImage.style.transition = "transform .4s";
-    tickImage.style.height = "21px";
-    tickImage.style.verticalAlign = "text-bottom";
-    tickImage.style.paddingLeft = "5px";
-    tickImage.setAttribute("src", this.getCheckImage(iconColor));
     // Create the Copied overlay
     const copied = document.createElement("span");
     copied.classList.add("copied-overlay");
-    copied.style.width = "100%";
-    copied.style.textAlign = "center";
-    copied.style.display = "none";
-    copied.innerHTML = 'Copied';
-    copied.appendChild(tickImage);
+    copied.innerHTML =
+      'Copied <img class="blockonomics-icon" src="' +
+      this.getCheckImage(iconColor) +
+      '">';
     containerInner.appendChild(copied);
 
     // Wrap the element in the 2nd div
     const containerOuter = document.createElement("div");
     containerOuter.classList.add("output-copy-container");
-    containerOuter.style.height = "100%";
-    containerOuter.style.display = "flex";
-    containerOuter.style.alignItems = "center";
     this.wrapElement(containerInner, containerOuter);
 
     // Create the copy icon
     const image = document.createElement("img");
     image.classList.add("blockonomics-icon");
-    image.style.transition = "transform .4s";
-    image.style.height = "21px";
-    image.style.verticalAlign = "text-bottom";
-    image.style.paddingLeft = "5px";
-    image.style.cursor = "pointer";
     image.setAttribute("src", this.getCopyImage(iconColor));
     image.addEventListener('click', (evt) => this.copyToClipboard(evt))
-    image.addEventListener('mouseover',function(){
-      image.style.transform = "scale(1.2)";
-    })
-    image.addEventListener('mouseleave',function(){
-      image.style.transform = "scale(1)";
-    })
     containerOuter.appendChild(image);
   }
 
@@ -177,6 +154,59 @@ class CopyToClipboard {
   }
 
 }
+
+/* 
+Include CSS in header using JS to simplyfy setup
+Styles are only required once JS has loaded
+*/
+var copyComponentStyles = `
+.output-copy-container{
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+.output-copy-container .output-copy {
+  max-width: -webkit-calc(100% - 30px) !important;
+  max-width:    -moz-calc(100% - 30px) !important;
+  max-width:         calc(100% - 30px) !important;
+  word-break: break-all;
+}
+.output-copy-container .value {
+  display: inline-block;
+}
+.output-copy-container .copied-overlay {
+  width: 100%;
+  text-align: center;
+  display: none;
+}
+.output-copy-container .blockonomics-icon {
+  transition: transform .4s;
+  height: 21px;
+  vertical-align: text-bottom;
+  padding-left: 5px;
+}
+.output-copy .blockonomics-icon{
+  padding-left: 0px;
+}
+.output-copy-container .blockonomics-icon:hover {
+  -ms-transform: scale(1.2);
+  -webkit-transform: scale(1.2);
+  transform: scale(1.2);
+  cursor: pointer;
+}
+`;
+
+var head = document.head || document.getElementsByTagName('head')[0];
+var style = document.createElement('style');
+
+style.type = 'text/css';
+if (style.styleSheet){
+  style.styleSheet.cssText = copyComponentStyles;
+} else {
+  style.appendChild(document.createTextNode(copyComponentStyles));
+}
+head.appendChild(style);
+
 
 const copyToClipboard = new CopyToClipboard()
 copyToClipboard.processElements()
